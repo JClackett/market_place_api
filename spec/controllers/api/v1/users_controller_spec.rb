@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Api::V1::UsersController do
   before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# GET : SHOW
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
   describe "GET #show" do
     before(:each) do
       @user = FactoryGirl.create :user
@@ -17,6 +21,10 @@ describe Api::V1::UsersController do
     it { should respond_with 200 }
   end
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# POST : CREATE
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
   describe "POST #create" do
 
     context "when is successfully created" do
@@ -55,6 +63,10 @@ describe Api::V1::UsersController do
     end
   end
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# PUT/PATCH : UPDATE
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
   describe "PUT/PATCH #update" do
 
     context "when is successfully updated" do
@@ -91,15 +103,19 @@ describe Api::V1::UsersController do
 
       it { should respond_with 422 }
     end
-
-describe "DELETE #destroy" do
-  before(:each) do
-    @user = FactoryGirl.create :user
-    delete :destroy, { id: @user.id }, format: :json
   end
 
-  it { should respond_with 204 }
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+# DELETE : DESTROY
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-end
+  describe "DELETE #destroy" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      delete :destroy, { id: @user.id }, format: :json
+    end
+
+    it { should respond_with 204 }
+
   end
 end
