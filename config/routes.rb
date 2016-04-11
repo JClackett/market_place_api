@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
 			# We are going to list our resources here
 			resources :users, :only => [:index, :show, :create, :update, :destroy]
-
+			resources :sessions, :only => [:create, :destroy]
 		end
 	end
 
