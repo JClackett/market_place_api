@@ -12,6 +12,7 @@ describe User do
 
 	it { should be_valid }
 	
+	it { should have_many(:products) }
 	it { should validate_presence_of(:email) }
 	it { should validate_uniqueness_of(:email).case_insensitive }
 	it { should validate_confirmation_of(:password) }
@@ -31,4 +32,22 @@ describe User do
 			expect(@user.auth_token).not_to eql existing_user.auth_token
 		end
 	end
+
+	describe "#products association" do
+
+		before do
+			@user.save
+			3.times { FactoryGirl.create :product, user: @user }
+		end
+
+		it "destroys the associated products on self destruct" do
+			products = @user.products
+			@user.destroy
+			products.each do |product|
+				expect(Product.find(product)).to raise_error ActiveRecord::RecordNotFound
+			end
+		end
+	end
+
+	
 end

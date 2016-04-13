@@ -1,14 +1,12 @@
 class User < ActiveRecord::Base
-# Include default devise modules. Others available are:
-# :confirmable, :lockable, :timeoutable and :omniauthable
-devise :database_authenticatable, :registerable,
-     :recoverable, :rememberable, :trackable, :validatable
-	
+
 # ------------------------------------------------------------------------------
 # Includes & Extensions
 # ------------------------------------------------------------------------------
 
-
+# Include default devise modules. Others available are:
+# :confirmable, :lockable, :timeoutable and :omniauthable
+devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -26,20 +24,21 @@ devise :database_authenticatable, :registerable,
 # Associations
 # ------------------------------------------------------------------------------
 
+has_many :products, dependent: :destroy
 
 
 # ------------------------------------------------------------------------------
 # Validations
 # ------------------------------------------------------------------------------
 
-	validates :auth_token, uniqueness: true
-	validates_uniqueness_of :email, case_sensitive: false
+validates :auth_token, uniqueness: true
+validates_uniqueness_of :email, case_sensitive: false
 
 # ------------------------------------------------------------------------------
 # Callbacks
 # ------------------------------------------------------------------------------
 
-	before_create :generate_authentication_token!
+before_create :generate_authentication_token!
 
 
 # ------------------------------------------------------------------------------
@@ -70,11 +69,11 @@ devise :database_authenticatable, :registerable,
 # Instance Methods
 # ------------------------------------------------------------------------------
 
-	def generate_authentication_token!
-		begin
-			self.auth_token = Devise.friendly_token
-		end while self.class.exists?(auth_token: auth_token)
-	end
+def generate_authentication_token!
+	begin
+		self.auth_token = Devise.friendly_token
+	end while self.class.exists?(auth_token: auth_token)
+end
 
 
 # ------------------------------------------------------------------------------
