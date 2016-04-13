@@ -34,6 +34,7 @@ group :test , :development do
   gem "rspec-rails", "~> 3.4.2"
   gem "factory_girl_rails"
   gem 'ffaker'
+  gem 'rspec-collection_matchers'
   gem "shoulda-matchers"
 end
 
